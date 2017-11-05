@@ -1,0 +1,98 @@
+Pattern,Source Table,Original Name,GM Column Alias,Description,Field Type,Sample Field Values,Friendly Name,Subdocument,Signafire Alias,Section,Preview,Queryable,Analyzed,Nested,Verbatim,Transforms,Notes,Signafire Source Field Name,Scratch Notes,Metric,Dimension
+HIVE,SIGNAFIRE.VOQ_FINAL,NHTSA_CMPLNT_ID,cmplid,NHTSA Complaint ID,ID,936477,Complaint ID,activity,activity.complaintId,Activity,,,,Y,,,,complaint.cmplid,Analyzed?,,
+HIVE,SIGNAFIRE.VOQ_FINAL,NHTSA_CMPLNT_DFCT_ID,odino,NHTSA Complaint DFCT ID,ID,,ODINO,voq,odino,Detail,,,,,,,ODI Number,voq.odino,Stored?,,
+HIVE,SIGNAFIRE.VOQ_FINAL,CMPLNT_RECV_DT,case_open_dt,Complaint Recieved Date,DATE,,Date Received,activity,activity.caseOpened,Activity,,Y,,Y,,Date,Possibly need to be coalesced,complaint.case_open_dt,Include In Preview,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,CMPLNT_DWNLD_DT,datea,Complaint Downloaded Date,DATE,,Date Added,activity,activity.dateAdded,Activity,,,,Y,,Date,Possibly need to be coalesced,complaint.datea,Transforms (i.e. treat as Array),,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,CMPLNT_SRC_ID,cmpl_type,Complaint Source ID,ENUM,"IVOQ, EVOQ, VOQ",Complaint Source,activity,activity.complaintType,Activity,,,,Y,,Enum,See Data Dictionary,complaint.cmpl_type,Nested?,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,CMPLNT_PROD_TYPE_CD,prod_type,Compaint Product Type,ENUM,"T, V, C, E",Complaint Product Type,activity,activity.productType,Activity,,,,Y,,"Augment with Full Name (Tires, Vehicles)",See Data Dictionary,complaint.prod_type,Elasticsearch Field Type,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,CMPLNT_OCCUR_NBR,occurences,Compaint Occurences Number,INT,1,Complaint Occurences Number,activity,activity.occurrences,Activity,,,,Y,,Int,,complaint.occurences,Signafire alias field,Y,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,COMP_NM_STR_TXT,component,Specific Component Description,STRING,"ELECTRICAL SYSTEM, POWER TRAIN",Specific Component Description,activity,activity.componentDescription,Activity,,Y,,Y,,Array?,Deeper Dive,complaint.component,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,CMPLN_DESC,cdescr,Complaint Text,STRING,"REGARDLESS OF HOW FUEL NOZZLE IS PLACED, FUEL TANK OVER FILLS APPROX 1/8TH-1/3TH GALLON OF FUEL.  I FEAR THIS COULD CAUSE A FIRE IN THE EVENT FUEL SPLASHED ONTO BRAKE ROTOR OR OTHER HOT COMPONENTS, NOT TO MENTION THE ENVIRONMENTAL AND FINANCIAL IMPACT OF THIS ISSUE DIRECTLY RELATED TO POOR DESIGN.  *TR",Complaint Text,activity,activity.complaintText,Activity,Y,Y,Y,Y,Y,,Complaint text,complaint.cdescr,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,COMP_PURCH_DT,purch_dt,Complaint Purchase Date,DATE,,Purchase Date,activity,activity.purchaseDate,Activity,,,,Y,,Date,Most of these have a default value of 1800-01-01,complaint.purch_dt,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,COMP_MFR_NM,mfr_name,Manufacturer Name,STRING,General Motors LLC,Manufacturer Name,activity,activity.manufacturer,Activity,,Y,,Y,,,,complaint.mfr_name,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,COMP_MFR_DT,manuf_dt,Manufacturer Date,DATE,,Manufacturer Date,activity,activitiy.manufacturedDate,Activity,,,,Y,,,Mostly 1800-01-01,complaint.manuf_dt,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,PRTL_VEH_ID_NBR,partial_vin,VIN,STRING,1GNEK13Z42J,Partial VIN,vehicle,vehicle.partialVin,Vehicle,,Y,,,,,Is that the full VIN?,vehicle.partial_vin,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,CMPLNT_CRASH_IND,crash,Is Crash?,BOOL,"Y, N",Crashed,activity,activity.causedCrash,Activity,,Y,,Y,,YNBool,,complaint.crash,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,ORIG_OWN_IND,orig_owner_yn,Is Original Owner?,BOOL,"Y, N",Original Owner,activity,activity.isOriginalOwner,Activity,,,,Y,,YNBool,,complaint.orig_owner_yn,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,COMP_MAKE_NM,src_make,Make,STRING,"GMC, Chevrolet",Source Make,vehicle,vehicle.sourceMake,Vehicle,,Y,,,,,,vehicle.src_make,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,COMP_MODEL_NM,src_model,Model,STRING,"Camry, Tahoe",Source Model,vehicle,vehicle.sourceModel,Vehicle,,Y,,,,,,vehicle.src_model,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,COMP_MODEL_YR,src_my,Year,INT,,Source Year,vehicle,vehicle.sourceYear,Vehicle,,Y,,,,INT,,vehicle.src_my,,Y,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,CNSM_CITY_NM,city,City,STRING,"Chicago, Hamburg",Customer City,activity,activity.city,Hide,,,,Y,,,,complaint.city,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,CNSM_ST_CD,state,State,STRING,"MA, NY ",Customer State,activity,activity.state,Activity,,Y,,Y,,,2-letter abbreviations,complaint.state,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,COMP_DLR_NM,dealer_name,Dealer Name,STRING,"Hammer Toyota, Tucker Automotive",Dealer Name,activity,activity.dealerName,Hide,,,,Y,,,Typically Blank,complaint.dealer_name,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,COMP_DLR_PHONE_NBR,dealer_tel,Dealer Telephone,STRING,,Dealer Telephone,activity,activity.dealerTelephone,Hide,,,,Y,,,Typically Blank,complaint.dealer_tel,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,COMP_DLR_CITY_NM,dealer_city,Dealer City,STRING,,Dealer City,activity,activity.dealerCity,Hide,,,,Y,,,Typically Blank,complaint.dealer_city,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,COMP_DLR_ST_CD,dealer_state,Dealer State,STRING,,Dealer State,activity,activity.dealerState,Hide,,,,Y,,,Typically Blank,complaint.dealer_state,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,COMP_DLR_PSTL_CD,dealer_zip,Dealer ZIP,STRING,,Dealer ZIP,activity,activity.dealerZip,Hide,,,,Y,,,Typically Blank,complaint.dealer_zip,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,INCID_DT,incident_dt,Incident Date,DATE,,Incident Date,activity,activity.incidentDate,Activity,,,,Y,,Date,,complaint.incident_dt,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,INCID_FIRE_IND,fire,Caused Fire?,BOOL,"Y, N",Fire,activity,activity.causedFire,Activity,,Y,,Y,,YNBool,,complaint.fire,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,INCID_INJR_NBR,injured,Number Injured,INT,,Number Injured,activity,activity.injured,Activity,,Y,,Y,,int,,complaint.injured,,Y,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,INCID_FATAL_NBR,deaths,Number of Deaths,INT,,Number of Deaths,activity,activity.deaths,Activity,,Y,,Y,,int,,complaint.deaths,,Y,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,INCID_MEDC_ATTN_REQD_IND,medical_attn,Medical Attention Required?,BOOL,"Y, N",Medical Attention Required,activity,activity.medicalAttentionRequired,Activity,,Y,,Y,,YNBool,,complaint.medical_attn,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,INCID_POLC_RPT_IND,police_rpt_yn,Reported to Police?,BOOL,"Y, N",Reported to Police,activity,activity.reportedToPolice,Activity,,Y,,Y,,YNBool,,complaint.police_rpt_yn,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,INCID_VEH_MIL_NBR,miles,Miles on Vehicle,STRING,00000038000.00,Odometer (miles),voq,odometerMiles,Detail,,Y,,,,Odometer Transformer (mph & km),Zero padded mileage,vehicle.odometer,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,INCID_VEH_SPD_NBR,veh_speed,Vehicle Speed,INT,,Vehicle Speed,activity,activity.vehicleSpeed,Activity,,Y,,Y,,,,complaint.veh_speed,,Y,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,VEH_ANTI_LOCK_BRAKE_IND,anti_brakes_yn,Has Anti-Lock Brakes?,BOOL,"Y, N",Anti-Lock Brakes,activity,activity.hasAntiLockBrakers,Hide,,,,Y,,YNBool,,complaint.anti_brakes_yn,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,VEH_CRUISE_CTRL_IND,cruise_cont_yn,Has Cruise Control?,BOOL,"Y, N",Cruise Control,activity,activity.hasCruiseControl,Hide,,,,Y,,YNBool,,complaint.cruise_cont_yn,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,VEH_CYLNDR_NBR,num_cyls,Number of Vehicle Cylinders,INT,"4, 6, 8, 5",Number of Vehicle Cylinders,activity,activity.cylinders,Hide,,,,Y,,,,complaint.num_cyls,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,VEH_DRV_TRAIN_TYPE_CD,drive_train,Vehicle Drive Train Type,ENUM,"4WD, AWD, RWD, FWD",Vehicle Drive Train Type,activity,activity.driveTrainType,Hide,,,,Y,,Enum,See Data Dictionary,complaint.drive_train,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,VEH_FUEL_TYPE_CD,fuel_type,Vehicle Fuel Type,ENUM,"DS, GS, HE, BF",Vehicle Fuel Type,activity,activity.fuelType,Hide,,,,Y,,Enum,See Data Dictionary,complaint.fuel_type,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,VEH_TRANSM_TYPE_CD,trans_type,Transmission Type,ENUM,"AUTO, MAN",Transmission Type,activity,activity.transmissionType,Hide,,,,Y,,Enum,See Data Dictionary,complaint.trans_type,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,VEH_FUEL_SYS_TYPE_CD,fuel_sys,Fuel System Type,ENUM,"FI, D, F, G",Fuel System Type,activity,activity.fuelSystemType,Hide,,,,Y,,Enum,See Data Dictionary,complaint.fuel_sys,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,CHILD_CAR_SEAT_TYPE_CD,seat_type,Child Car Seat Type,ENUM,"IN, C, B, I",Child Car Seat Type,activity,activity.childSeatType,Hide,,,,Y,,ENum,See Data Dictionary,complaint.seat_type,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,CHILD_CAR_SEAT_RSTRN_TYPE_CD,restraint_type,Child Car Restraint Type,ENUM,"B, A",Child Car Restraint Type,activity,activity.childRestraintType,Hide,,,,Y,,Enum,See Data Dictionary,complaint.restraint_type,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,TIRE_SIZE_VAL,tire_size,Tire Size,STRING,ST235/80R16,Tire Size,activity,activity.tireSize,Hide,,,,Y,,,,complaint.tire_size,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,DOT_TIRE_ID,dot,DoT Tire Identifier,STRING,UP9HCTB,DoT Tire Identifier,activity,activity.dot,Hide,,,,Y,,,,complaint.dot,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,TIRE_LOC_CD,loc_of_tire,Location of Tire Code,STRING,"FSW, DSR",Location of Tire,activity,activity.tireLocation,Hide,,Y,,Y,,Enum,See Data Dictionary,complaint.loc_of_tire,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,REPAIRED_YN,repaired_yn,Tire Defect Repaired,BOOL,"Y, N",Tire Defect Repaired,activity,activity.tireRepaired,Hide,,Y,,Y,,YNBool,,complaint.repaired_yn,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,TIRE_FAIL_TYPE_CD,tire_fail_type,Tire Fail Type,ENUM,TTR/BLW,Tire Fail Type,activity,activity.tireFailedType,Hide,,Y,,Y,,Enum,See Data Dictionary,complaint.tire_fail_type,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,ORIG_EQUIP_IND,orig_equip_yn,Has Original Equipment?,BOOL,"Y, N",Has Original Equipment,activity,activity.hasOriginalEquipment,Hide,,,,Y,,YNBool,,complaint.orig_equip_yn,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,VEH_TOW_FLG,vehicles_towed_yn,Vehicle Towed?,BOOL,"Y, N",Vehicle Towed?,activity,activity.vehicleTowed,Hide,,,,Y,,YNBool,,complaint.vehicles_towed_yn,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,,cmt_flg,Has Complaint Description?,BOOL,"Y, N",Has Complaint Description?,voq,commentFlag,Hide,,,,,,YNBool,Possibly Ignore all together,voq.cmt_flg,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,,comp_fault_cd,Component Fault Code,ENUM,UNK,Component Fault Code,activity,activity.componentFaultCode,Activity,,Y,,Y,,Enum,,complaint.comp_fault_cd,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,component_derived,Derived Component,STRING,"VEHICLE SPEED CONTROL, AIR BAGS",Derived Component,activity,activity.derivedComponent,Activity,,Y,,Y,,,How to Transform Multiple Values,complaint.component_derived,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,source,Datasource,STRING,NHTSA-VOQ,Datasource,voq,datasource,"Preview, Detail",Y,,,,,,,voq.source,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,,incident_ctry,Country of Incident,STRING,US,Country of Incident,voq,incidentCountry,Detail,,Y,,,,,,voq.incident_ctry,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,gm_manuf_flg,Manufactured by GM?,BOOL,"Y, N",Manufactured by GM,vehicle,vehicle.manufacturedByGM,Vehicle,,Y,,,,YNBool,,vehicle.gm_manuf_flg,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,final_dt,Final Date,DATE,1998-03-15,Final Date,activity,activity.finalDate,Activity,,,,Y,,Date,Derived field,complaint.final_dt,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,edw_etl_dt,EDW ETL datetime,DATETIME,2017-05-05 14:55:26,EDW ETL datetime,voq,edwEtlDatetime,Hide,,Y,,,,Datetime,,voq.edw_etl_dt,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,,nhtsa_category,NHTSA Category,STRING,"Wheels, Powertrain",NHTSA Category,activity,activity.nhtsaCategory,Activity,,Y,,Y,,,,complaint.nhtsa_category,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,safety_hazard,Safety Hazard Category,STRING,"Wheels, Powertrain",Safety Hazard Category,activity,activity.safetyHazardCategory,Activity,,Y,,Y,,,,complaint.safety_hazard,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,vin_mask_veh_mask_cd,Vim Mask Vehicle Mask Code,STRING,1G3GR62V4,Vin Mask Vehicle Code,vehicle,vehicle.vinMaskVehicleCode,Vehicle?,,,,,,,Has Nulls,vehicle.vin_mask_veh_mask_cd,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,,sale_ctry,Country of Sale,STRING,US,Country of Sale,voq,vehicle.countryOfSale,Vehicle,,,,,,,,voq.sale_ctry,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,,mmy_match_method_nm,MMY Match Method Name,STRING,"NON MMY PROCESS, SQUISH VIN MATCH, UMT MATCH",MMY Match Method,vehicle,vehicle.mmyMatchMethod,Vehicle,,,,,,,,vehicle.mmy_match_method_nm,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,,vin_mask_veh_make_nm,Vin Mask Vehicle Mask Name,STRING,"UNK, OLDSMOBILE, CHEVROLET",Vin Mask Vehicle Make,vehicle,vehicle.vinMakeName,Hide,,,,,,,,vehicle.vin_mask_veh_make_nm,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,,vin_mask_veh_model_nm,Vin Mask Vehicle Model Name,STRING,"AURORA, SILVERADO",Vin Mask Vehicle Model,vehicle,vehicle.vinModelName,Hide,,,,,,,,vehicle.vin_mask_veh_model_nm,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,,vin_mask_veh_model_yr_nbr,Vin Mask Vehicle Model Year,INT,1997,Vin Mask Vehicle Year,vehicle,vehicle.vinModelYear,Hide,,,,,,,Default Value is 1800,vehicle.vin_mask_veh_model_yr_nbr,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,,vin_mask_veh_prod_line_nm,Vin Mask Vehicle Product Line Name,STRING,Large Car,Vin Mask Vehicle Product Line Name,vehicle,vehicle.vinLineName,Hide,,,,,,,,vehicle.vin_mask_veh_prod_line_nm,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,,mmy,MMY,STRING,OLDSMOBILE-AURORA-1997,MMY,vehicle,vehicle.mmy,Hide,,,,,,,Default value is UNK-UNK-1800,vehicle.mmy,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,,reporting_make,Reporting Make,STRING,Mazda,Reporting Make,vehicle,vehicle.make,"Preview, Vehicle",Y,Y,,,,,,vehicle.reporting_make,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,reporting_model,Reporting Model,STRING,"323, INTREPID",Reporting Model,vehicle,vehicle.model,"Preview, Vehicle",Y,Y,,,,,,vehicle.reporting_model,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,reporting_my,Reporting Make Year,INT,1997,Reporting Model Year,vehicle,vehicle.modelYear,"Preview, Vehicle",Y,Y,,,,,,vehicle.reporting_my,,Y,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,reporting_platform,Reporting Platform,STRING,"Large Car, Full-Size Trucks",Reporting Platform,vehicle,vehicle.reportingPlatform,Vehicle,,Y,,,,,,vehicle.reporting_platform,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,reporting_mmy,Reporting MMY,STRING,MAZDA-323-1986,Reporting MMY,vehicle,vehicle.reportingMMY,Hide,,Y,,,,,,vehicle.reporting_mmy,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,,mmy_architecture,MMY Architecture,STRING,"UNK, P90, DELTA, EPSILON-GMNA",MMY Architecture,vehicle,vehicle.mmyArchitecture,Vehicle,,,,,,,Has Nulls,vehicle.mmy_architecture,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,mmy_program,MMY Program,STRING,"G CAR, GMT-400",MMY Program,vehicle,vehicle.mmyProgram,Vehicle,,,,,,,Has Nulls,vehicle.mmy_program,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,mmy_builds,MMY Builds,LONG,"23565, 513922",MMY Builds,vehicle,vehicle.mmyBuilds,Vehicle,,,,,,Int,Has Nulls,vehicle.mmy_builds,,Y,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,mmy_sales,MMY Sales,LONG,"23402, 513792",MMY Sales,vehicle,vehicle.mmySales,Vehicle,,,,,,Int,Has Nulls,vehicle.mmy_sales,,Y,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,mmy_max_bld_dt,MMY Max Build Date,DATE,1999-07-26,MMY Max Build Date,vehicle,vehicle.mmyBuildDate,Vehicle,,,,,,,Has Nulls,vehicle.mmy_max_bld_dt,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,mmy_max_sale_dt,MMY Max Sale Date,DATE,2000-02-23,MMY Max Sale Date,vehicle,vehicle.mmySaleDate,Vehicle,,Y,,,,,Has Nulls,vehicle.mmy_max_sale_dt,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,best_make,Best Make,STRING,"GMC, Chevrolet",Best Make,vehicle,vehicle.bestMake,Vehicle,,Y,,,,,Has Nulls,vehicle.best_make,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,best_model,Best Model,STRING,"ENVOY, TAHOE",Best Model,vehicle,vehicle.bestModel,Vehicle,,Y,,,,,Has Nulls,vehicle.best_model,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,best_my,Best MY,SHORT,1997,Best Model Year,vehicle,vehicle.bestYear,Vehicle,,Y,,,,,,vehicle.best_my,,Y,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,best_platform,Best Platform,STRING,"Full-Size Utility, Mid-size Sport Utility Vehicles",Best Platform,vehicle,vehicle.bestPlatform,Vehicle,,Y,,,,,Has Nulls,vehicle.best_platform,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,final_make,Final Make,STRING,"GMC, Chevrolet",Final Make,vehicle,vehicle.finalMake,Vehicle,,Y,,,,,,vehicle.final_make,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,final_model,Final Model,STRING,"TRAILBLAZER, G6",Final Model,vehicle,vehicle.finalModel,Vehicle,,Y,,,,,,vehicle.final_model,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,final_my,Final MY,SHORT,2000,Final Model Year,vehicle,vehicle.finalYear,Vehicle,,Y,,,,,,vehicle.final_my,,Y,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,final_platform,Final Platform,STRING,"N CAR, Global Compact Vehicles",Final Platform,vehicle,vehicle.finalPlatform,Vehicle,,Y,,,,,,vehicle.final_platform,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,final_mmy,Final MMY,STRING,GMC-ENVOY-2006,Final MMY,vehicle,vehicle.finalMMY,Hide,,,,,,,Has Nulls,vehicle.final_mmy,,,
+HIVE,SIGNAFIRE.VOQ_FINAL,,bmmy_builds,Best MMY Builds,INT,All Values in table NULL,Best MMY Builds,vehicle,vehicle.bestMMYBuilds,Vehicle,,Y,,,,Int,Has Nulls,vehicle.bmmy_builds,,Y,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,bmmy_sales,Best MMY Sales,INT,All Values in table NULL,Best MMY Sales,vehicle,vehicle.bestMMYSales,Vehicle,,Y,,,,Int,Is a quantity not a dollar amount,vehicle.bmmy_sales,,Y,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,mmy_first_good_sales_mnth,MMY First Good Sales Month,DATE,2006-01-01,MMY First Good Sales Month,vehicle,vehicle.mmyFirstGoodSalesMonth,Vehicle,,Y,,,,Date,Typically Jan 1 of Year,vehicle.mmy_first_good_sales_mnth,,,Y
+HIVE,SIGNAFIRE.VOQ_FINAL,,mis,Months in Service,INT,"0, 7, 17, 75",Months in Service,vehicle,monthsInService,Detail,,Y,,,,Int,Has Nulls,vehicle.mis,,Y,Y
+,,Generated Field,signafire_odino,ODINO + Reporting_MMY,STRING,23432423-OLDSMOBILE-AURORA-1997,Signafire ODINO,voq,selfId,Detail,,,,,,,,voq.signafire_odino,,,
+,,,doi,Date of Information,DATE,2017-05-05 14:55:26,Published,voq,published,Detail,,,,,,,,metadata.doi,,,Y
+,,,miles,Odometer (Miles),FLOAT,3324234.12,Odometer (miles),voq,odometerMiles,Detail,,,,,,,,vehicle.mmy_max_bld_dt,,,
+,,,miles,Odometer (KM),FLOAT,2312312.12,Odometer (kilometers),voq,odometerKilometers,Detail,,,,,,,,vehicle.mmy_max_bld_dt,,,
+,,,mmy_max_bld_dt,MMY Max Build Month,SHORT,1,Build Month,vehicle,buildMonth,Vehicle,,,,,,,,vehicle.mmy_max_bld_dt,,Y,Y
+,,,mmy_max_bld_dt,MMY Max Build Year,INT,2000,Build Year,vehicle,buildYear,Vehicle,,,,,,,,vehicle.mmy_max_bld_dt,,Y,Y
