@@ -1,6 +1,7 @@
 ![Image](https://upload.wikimedia.org/wikipedia/commons/5/5d/Clojure_logo.svg)
 
 #### Debugging in Clojure
+
 <br>
 <span style="color:gray">Finding Light in the Darkness</span>
 <br>
@@ -125,7 +126,8 @@ nil
 3. Stepping In 
 
 +++
-### REPL vs. Application vs. Lein Task
+### REPL vs Application 
+### vs Lein Task
 
 - Cursive uses the nREPL architecture ("Network REPL")
   - It works like most nREPLs with a few nifty features

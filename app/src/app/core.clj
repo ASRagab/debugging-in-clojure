@@ -7,8 +7,8 @@
 (defn do-stuff [x y z]
   (let [file (slurp "./README.md")
         hello (take 10 file)]
-    #dbg ^{:break/when (nil? file)}
-    (+ 10 (count #spy/p hello))))
+    #dbg ^{:break/when (some? file)}
+    (+ 10 (count hello))))
 
 (do-stuff 10 1 3)
 
