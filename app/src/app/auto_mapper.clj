@@ -92,7 +92,7 @@
 
 (defn specified-type->storage-type
   [given-type]
-  (log/debug "Given type: " given-type)
+  (log/trace "Given type: " given-type)
   (case given-type
     "BOOL"      "boolean"
     "DATE"      "date"
@@ -198,7 +198,7 @@
   [top-level root m]
   (log/trace "Rewriting " m)
   (into {} (for [[k v] m] [k (update-in v [:_meta :source] (fn [old-source]
-                                                             (log/debug "Old source: " old-source)
+                                                             (log/trace "Old source: " old-source)
                                                              (str top-level "." root "." old-source)))])))
 
 

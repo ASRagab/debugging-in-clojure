@@ -1,0 +1,420 @@
+{
+    "%%doc%%": {
+        "order": 2,
+        "template": "sf_*",
+        "mappings": {
+            "%%doc%%": {
+                "_all": {
+                    "enabled": false
+                },
+                "dynamic_templates": [
+                    {
+                        "snippets_ontology": {
+                            "match_pattern": "regex",
+                            "path_match": "^signafire\\.snippets\\.(?:categories|components|dictionaries|rules|sentiment)\\.[^.]+$",
+                            "mapping": {
+                                "properties": {
+                                    "terms": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "_meta": {
+                                            "title": "Terms",
+                                            "description": "Terms"
+                                        }
+                                    },
+                                    "tokens": {
+                                        "properties": {
+                                            "properties": {
+                                                "type": "short",
+                                                "index": "no",
+                                                "_meta": {
+                                                    "title": "Token Properties",
+                                                    "description": "Properties for tokens"
+                                                }
+                                            },
+                                            "db_term": {
+                                                "type": "string",
+                                                "index": "not_analyzed",
+                                                "_meta": {
+                                                    "title": "Database Term",
+                                                    "description": "The token term in the database"
+                                                }
+                                            },
+                                            "term": {
+                                                "type": "string",
+                                                "index": "not_analyzed",
+                                                "_meta": {
+                                                    "title": "Term",
+                                                    "description": "The token term that matched"
+                                                }
+                                            },
+                                            "place": {
+                                                "type": "short",
+                                                "index": "not_analyzed",
+                                                "_meta": {
+                                                    "title": "Place",
+                                                    "description": "The location (start and stop position) within the text where the token was found"
+                                                }
+                                            },
+                                            "match": {
+                                                "type": "string",
+                                                "index": "not_analyzed",
+                                                "_meta": {
+                                                    "title": "Match",
+                                                    "description": "The token match"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "properties": {
+                                        "type": "short",
+                                        "index": "not_analyzed",
+                                        "_meta": {
+                                            "title": "Properties",
+                                            "description": "Properties"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "snippets_score": {
+                            "match_pattern": "regex",
+                            "path_match": "^signafire\\.snippets\\.(?:categories|components|dictionaries)\\..+\\.score$",
+                            "mapping": {
+                                "type": "float",
+                                "index": "not_analyzed",
+                                "_meta": {
+                                    "title": "Score",
+                                    "description": "The highest absolute value score"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "properties": {
+                    "signafire": {
+                        "properties": {
+                            "metadata": {
+                                "properties": {
+                                    "change_status": {
+                                        "type": "string",
+                                        "index": "not_analyzed",
+                                        "_meta": {
+                                            "source": "metadata.change_status",
+                                            "title": "Change Status",
+                                            "description": "Is the source-tracking status of the document, can be new, updated, or none"
+                                        }
+                                    },
+                                    "collected_at": {
+                                        "type": "date",
+                                        "format": "strict_date_time",
+                                        "index": "not_analyzed",
+                                        "_meta": {
+                                            "source": "metadata.collected_at",
+                                            "title": "Collected At",
+                                            "description": "The date the document was collected for processing."
+                                        }
+                                    },
+                                    "topology_duration": {
+                                        "type": "float",
+                                        "index": "not_analyzed",
+                                        "_meta": {
+                                            "title": "Hailstorm Duration",
+                                            "description": "The amount of time the document spent processing in Hailstorm, measured in milliseconds"
+                                        }
+                                    },
+                                    "matching_rules": {
+                                        "_meta": {
+                                            "source": "metadata.matching_rules"
+                                        },
+                                        "properties": {
+                                            "tag": {
+                                                "type": "string",
+                                                "index": "not_analyzed",
+                                                "_meta": {
+                                                    "source": "tag",
+                                                    "title": "Matching Rule Tag",
+                                                    "description": "Matching rule associated with the document."
+                                                }
+                                            }
+                                        }
+                                    }
+                                    }
+                                },
+                                "tag_versions": {
+                                    "_meta": {
+                                        "transform": false
+                                    },
+                                    "properties": {
+                                        "topology_version": {
+                                            "type": "string",
+                                            "index": "not_analyzed",
+                                            "_meta": {
+                                                "title": "Topology Version",
+                                                "description": "Topology version used to process the document"
+                                            }
+                                        },
+                                        "sentiment": {
+                                            "type": "string",
+                                            "index": "not_analyzed",
+                                            "_meta": {
+                                                "title": "Sentiment Version",
+                                                "description": "Sentiment version used to process the document"
+                                            }
+                                        },
+                                        "ontology": {
+                                            "type": "date",
+                                            "format": "strict_date_time_no_millis",
+                                            "_meta": {
+                                                "title": "Ontology Version",
+                                                "description": "Ontology version used to process the document"
+                                            }
+                                        }
+                                    }
+                                },
+                                "type": {
+                                    "type": "string",
+                                    "index": "not_analyzed",
+                                    "_meta": {
+                                        "source": "metadata.doc_type",
+                                        "title": "Type",
+                                        "description": "The type of the document"
+                                    }
+                                },
+                                "case_id": {
+                                    "type": "string",
+                                    "index": "not_analyzed",
+                                    "_meta": {
+                                        "title": "Case ID",
+                                        "description": "The case ID of the document"
+                                    }
+                                },
+                                "doc_id": {
+                                    "type": "string",
+                                    "index": "not_analyzed",
+                                    "_meta": {
+                                        "title": "Doc ID",
+                                        "description": "The globally unique document ID in Elasticsearch"
+                                    }
+                                },
+                                "index": {
+                                    "type": "string",
+                                    "index": "not_analyzed",
+                                    "_meta": {
+                                        "title": "Index",
+                                        "description": "The name of the index in which this document belongs in Elasticsearch"
+                                    }
+                                },
+                                "snippets": {
+                                    "_meta": {
+                                        "transform": false
+                                    },
+                                    "type": "nested",
+                                    "properties": {
+                                        "snippet": {
+                                            "type": "string",
+                                            "index": "analyzed",
+                                            "_meta": {
+                                                "title": "Snippet",
+                                                "description": "Snippet from the document text"
+                                            }
+                                        },
+                                        "whitelisted": {
+                                            "properties": {
+                                                "category": {
+                                                    "type": "string",
+                                                    "index": "not_analyzed",
+                                                    "_meta": {
+                                                        "title": "Category",
+                                                        "description": "The category for the whitelisted term"
+                                                    }
+                                                },
+                                                "whitelisted_place": {
+                                                    "type": "short",
+                                                    "index": "not_analyzed",
+                                                    "_meta": {
+                                                        "title": "Whitelisted Place",
+                                                        "description": "The location (start and stop position) of the whitelisted term within the text"
+                                                    }
+                                                },
+                                                "whitelisted_term": {
+                                                    "type": "string",
+                                                    "index": "not_analyzed",
+                                                    "_meta": {
+                                                        "title": "Whitelisted Term",
+                                                        "description": "The term that was whitelisted"
+                                                    }
+                                                },
+                                                "term": {
+                                                    "type": "string",
+                                                    "index": "not_analyzed",
+                                                    "_meta": {
+                                                        "title": "Term",
+                                                        "description": "The term that was affected by the whitelisted term"
+                                                    }
+                                                },
+                                                "place": {
+                                                    "type": "short",
+                                                    "index": "not_analyzed",
+                                                    "_meta": {
+                                                        "title": "Place",
+                                                        "description": "The location (start and stop position) of the term that was affected by the whitelisted term"
+                                                    }
+                                                },
+                                                "match": {
+                                                    "type": "string",
+                                                    "index": "not_analyzed",
+                                                    "_meta": {
+                                                        "title": "Match",
+                                                        "description": "The whitelisted term match"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "snippet_id": {
+                                            "type": "short",
+                                            "index": "not_analyzed",
+                                            "_meta": {
+                                                "title": "Snippet ID",
+                                                "description": "The ID of the snippet within the document"
+                                            }
+                                        },
+                                        "one_way_sentiment": {
+                                            "properties": {
+                                                "score": {
+                                                    "type": "float",
+                                                    "index": "not_analyzed",
+                                                    "_meta": {
+                                                        "title": "Score",
+                                                        "description": "The highest absolute value score for pos or neg sentiment"
+                                                    }
+                                                },
+                                                "sentiment": {
+                                                    "type": "string",
+                                                    "index": "not_analyzed",
+                                                    "_meta": {
+                                                        "title": "Sentiment Type",
+                                                        "description": "The type of the one-way sentiment"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "categories": {
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "identifier": {
+                                                    "type": "string",
+                                                    "index": "not_analyzed"
+                                                },
+                                                "base_path": {
+                                                    "type": "string",
+                                                    "index": "not_analyzed"
+                                                },
+                                                "index": {
+                                                    "type": "short",
+                                                    "index": "not_analyzed"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "sentiment": {
+                                    "_meta": {
+                                        "transform": false
+                                    },
+                                    "properties": {
+                                        "pos": {
+                                            "properties": {
+                                                "max": {
+                                                    "type": "float",
+                                                    "index": "not_analyzed",
+                                                    "_meta": {
+                                                        "title": "Max Positive",
+                                                        "description": "Max positive sentiment"
+                                                    }
+                                                },
+                                                "properties": {
+                                                    "type": "short",
+                                                    "index": "not_analyzed",
+                                                    "_meta": {
+                                                        "title": "Properties",
+                                                        "description": "Properties for sentiment"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "neg": {
+                                            "properties": {
+                                                "max": {
+                                                    "type": "float",
+                                                    "index": "not_analyzed",
+                                                    "_meta": {
+                                                        "title": "Max Negative",
+                                                        "description": "Max negative sentiment"
+                                                    }
+                                                },
+                                                "properties": {
+                                                    "type": "short",
+                                                    "index": "not_analyzed",
+                                                    "_meta": {
+                                                        "title": "Properties",
+                                                        "description": "Properties for sentiment"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "one_way_sentiment": {
+                                    "_meta": {
+                                        "transform": false
+                                    },
+                                    "properties": {
+                                        "score": {
+                                            "type": "float",
+                                            "index": "not_analyzed",
+                                            "_meta": {
+                                                "title": "Score",
+                                                "description": "The highest absolute value score for pos or neg sentiment"
+                                            }
+                                        },
+                                        "sentiment": {
+                                            "type": "string",
+                                            "index": "not_analyzed",
+                                            "_meta": {
+                                                "title": "Sentiment Type",
+                                                "description": "The type of the one-way sentiment"
+                                            }
+                                        }
+                                    }
+                                },
+                                "problems": {
+                                    "_meta": {
+                                        "transform": false
+                                    },
+                                    "properties": {
+                                        "path": {
+                                            "index": "not_analyzed",
+                                            "type": "string"
+                                        },
+                                        "field": {
+                                            "index": "not_analyzed",
+                                            "type": "string"
+                                        },
+                                        "descriptions": {
+                                            "index": "not_analyzed",
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
