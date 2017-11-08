@@ -1,6 +1,6 @@
 ![Image](https://upload.wikimedia.org/wikipedia/commons/5/5d/Clojure_logo.svg)
 
-#### Debugging in Clojure
+#### ~~Debugging~~ Diagnosting? in Clojure
 
 <br>
 <span style="color:gray">Finding Light in the Darkness</span>
