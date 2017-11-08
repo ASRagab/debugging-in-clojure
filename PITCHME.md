@@ -5,7 +5,7 @@
 <br>
 <span style="color:gray">Finding Light in the Darkness</span>
 <br>
-<span style="color:gray">using the repl, Emacs and Cursive</span>
+<span style="color:gray">using Emacs and Cursive</span>
 
 ---
 ### Darkness
