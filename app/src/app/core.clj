@@ -19,7 +19,7 @@
 
 (foo 10)
 
-(defn call-future [p] #spy/t ^{:time true} (future (Thread/sleep 10000) (+ 4 (:value {:value p :something "else"}))))
+(defn call-future [p] #spy/t ^{:time true} (future (Thread/sleep 1000) (+ 4 (:value {:value p :something "else"}))))
 
 (call-future 100)
 

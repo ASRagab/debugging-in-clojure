@@ -166,4 +166,5 @@ Demo...
 [Repl Driven Development (video)](https://vimeo.com/223309989)
 <br>
 [Cursive User Guide](https://cursive-ide.com/userguide/)
- 
+<br>
+[Sayid](http://bpiel.github.io/sayid/) 
