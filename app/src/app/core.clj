@@ -6,11 +6,16 @@
 
 (defn do-stuff [x y z]
   (let [file (slurp "./README.md")
-        hello (take 10 file)]
+        hello (take x file)]
     #dbg ^{:break/when (some? file)}
-    (+ 10 (count hello))))
+    (+ y z (count hello))))
 
 (do-stuff 10 1 3)
+
+(defn do-stuff2 [x y z]
+  (do-stuff x y z))
+
+(do-stuff2 10 2 5)
 
 (defn foo
   "I don't do a whole lot."
@@ -33,4 +38,3 @@
 (get-in parsed-mapping ["voq" "vehicle" "properties" "sourceYear"])
 (get-in parsed-mapping ["voq" "properties" "commentFlag"])
 
-(a/handle-template "voq" parsed-mapping [:voq :properties] "./resources/template.json")
