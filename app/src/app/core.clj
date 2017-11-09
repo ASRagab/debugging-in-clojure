@@ -1,8 +1,7 @@
 (ns app.core
   (:require [clojure.pprint :as pretty]
             [cheshire.parse :as p]
-            [cheshire.core :as c]
-            [app.auto-mapper :as a]))
+            [cheshire.core :as c]))
 
 (defn do-stuff [x y z]
   (let [file (slurp "./README.md")
@@ -27,14 +26,4 @@
 (defn call-future [p] #spy/t ^{:time true} (future (Thread/sleep 1000) (+ 4 (:value {:value p :something "else"}))))
 
 (call-future 100)
-
-(def my-rows (a/parse-specification "./resources/voq.csv"))
-(def json-mapping (a/process-specification "doc" "voq" my-rows))
-(def parsed-mapping (c/parse-string json-mapping))
-
-
-(assoc-in {:voq {:properties {}}} [:voq :properties] my-rows)
-
-(get-in parsed-mapping ["voq" "vehicle" "properties" "sourceYear"])
-(get-in parsed-mapping ["voq" "properties" "commentFlag"])
 
