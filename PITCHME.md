@@ -68,7 +68,7 @@ user=> (take 20 (repeat #spy/p (+ 1 2 3)))
 spyscope.core$pretty_render_value.invokeStatic(core.clj:24) x => 10
 10 Hello, World!
  ```
- @[4,6](Evaluates the subsequent form, and provides the file name where the error occured)
+@[4,6](Evaluates the subsequent form, and provides the file name where the error occured)
 
 +++
 `#spy/t - trace-query`
